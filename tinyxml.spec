@@ -75,8 +75,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc changes.txt readme.txt
 %attr(755,root,root) %{_bindir}/xmltest
 %attr(755,root,root) %{_libdir}/libtinyxml.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libtinyxml.so.0
 
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/libtinyxml.so
+%{_libdir}/libtinyxml.la
 %{_includedir}/*
