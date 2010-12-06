@@ -49,7 +49,7 @@ Pliki nagłówkowe biblioteki tinyxml.
 for i in tinyxml.cpp tinystr.cpp tinyxmlerror.cpp tinyxmlparser.cpp; do
 	%{__cxx} %{rpmcxxflags} -fPIC -o $i.o -c $i
 done
-%{__cxx} %{rpmcxxflags} %{rpmldflags} -shared -o lib%{name}.so.0.%{version} *.cpp.o
+%{__cxx} %{rpmcxxflags} %{rpmldflags} -shared -o libtinyxml.so.0.%{version} *.cpp.o
 
 %install
 rm -rf $RPM_BUILD_ROOT
