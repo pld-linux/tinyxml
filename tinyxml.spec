@@ -10,6 +10,8 @@ Source0:	http://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.zip
 # Source0-md5:	60f92af4f43364ab0c6d5b655e804bd3
 Patch0:		%{name}-flags.patch
 URL:		http://www.grinninglizard.com/tinyxml/
+BuildRequires:	libstdc++-devel
+BuildRequires:	libtool
 BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -47,18 +49,17 @@ Pliki nagłówkowe biblioteki tinyxml.
 
 # Not really designed to be build as lib
 for i in tinyxml.cpp tinystr.cpp tinyxmlerror.cpp tinyxmlparser.cpp; do
-	%{__cxx} %{rpmcxxflags} -fPIC -o $i.o -c $i
+	libtool --tag=CXX --mode=compile %{__cxx} %{rpmldflags} %{rpmcxxflags} -o $i.lo -c $i
 done
-%{__cxx} %{rpmcxxflags} %{rpmldflags} -shared -o libtinyxml.so.0.%{version} *.cpp.o
+libtool --tag=CXX --mode=link %{__cxx} %{rpmcxxflags} %{rpmldflags} -shared -rpath %{_libdir} -version-info 0:0:0 -o libtinyxml.la *.cpp.lo
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_includedir}}
 
 cp -a xmltest $RPM_BUILD_ROOT%{_bindir}
-cp -a libtinyxml.so.0.%{version} $RPM_BUILD_ROOT%{_libdir}
 cp -a tiny*.h $RPM_BUILD_ROOT%{_includedir}
-ln -s libtinyxml.so.0.%{version} $RPM_BUILD_ROOT%{_libdir}/libtinyxml.so
+libtool --mode=install %{__install} -c libtinyxml.la $RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
