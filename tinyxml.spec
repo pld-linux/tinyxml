@@ -43,15 +43,18 @@ Pliki nagłówkowe biblioteki tinyxml.
 %{__make} \
 	CXX="%{__cxx}" \
 	LD="%{__cxx}" \
-	OPTFLAGS="%{rpmcxxflags}" \
+	OPTFLAGS="%{rpmcppflags} %{rpmcxxflags}" \
 	LDFLAGS="%{rpmldflags}"
 
-
-# Not really designed to be build as lib
+# Not really designed to be built as lib
 for i in tinyxml.cpp tinystr.cpp tinyxmlerror.cpp tinyxmlparser.cpp; do
-	libtool --tag=CXX --mode=compile %{__cxx} %{rpmldflags} %{rpmcxxflags} -o $i.lo -c $i
+	libtool --tag=CXX --mode=compile \
+		%{__cxx} %{rpmcppflags} %{rpmcxxflags} -o $i.lo -c $i
 done
-libtool --tag=CXX --mode=link %{__cxx} %{rpmcxxflags} %{rpmldflags} -shared -rpath %{_libdir} -version-info 0:0:0 -o libtinyxml.la *.cpp.lo
+libtool --tag=CXX --mode=link \
+	%{__cxx} %{rpmcxxflags} %{rpmldflags} \
+	-shared -rpath %{_libdir} -version-info 0:0:0 \
+	-o libtinyxml.la *.cpp.lo
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -59,7 +62,7 @@ install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_includedir}}
 
 cp -a xmltest $RPM_BUILD_ROOT%{_bindir}
 cp -a tiny*.h $RPM_BUILD_ROOT%{_includedir}
-libtool --mode=install %{__install} -c libtinyxml.la $RPM_BUILD_ROOT%{_libdir}
+libtool --mode=install %{__install} libtinyxml.la $RPM_BUILD_ROOT%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
