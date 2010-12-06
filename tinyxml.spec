@@ -4,7 +4,7 @@ Summary(pl.UTF-8):	Prosty, mały, napisany w C++ parser XML
 Name:		tinyxml
 Version:	2.6.1
 Release:	1
-License:	Distributable
+License:	zlib
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.zip
 # Source0-md5:	60f92af4f43364ab0c6d5b655e804bd3
