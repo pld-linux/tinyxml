@@ -1,0 +1,20 @@
+--- tinyxml/Makefile~	2010-03-23 06:16:36.000000000 +0100
++++ tinyxml/Makefile	2010-12-06 14:36:35.058193001 +0100
+@@ -26,7 +26,7 @@
+ RANLIB := ranlib
+ 
+ DEBUG_CFLAGS     := -Wall -Wno-format -g -DDEBUG
+-RELEASE_CFLAGS   := -Wall -Wno-unknown-pragmas -Wno-format -O3
++RELEASE_CFLAGS   := -Wall -Wno-unknown-pragmas -Wno-format
+ 
+ LIBS		 :=
+ 
+@@ -42,7 +42,7 @@
+    LDFLAGS      := ${DEBUG_LDFLAGS}
+ else
+    CFLAGS       := ${RELEASE_CFLAGS}
+-   CXXFLAGS     := ${RELEASE_CXXFLAGS}
++   CXXFLAGS     := ${RELEASE_CXXFLAGS} ${OPTFLAGS}
+    LDFLAGS      := ${RELEASE_LDFLAGS}
+ endif
+ 
