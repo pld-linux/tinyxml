@@ -56,9 +56,9 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_libdir},%{_includedir}}
 
 cp -a xmltest $RPM_BUILD_ROOT%{_bindir}
-cp -a libtinyxml.so.0.2.6.1 $RPM_BUILD_ROOT%{_libdir}
+cp -a libtinyxml.so.0.%{version} $RPM_BUILD_ROOT%{_libdir}
 cp -a tiny*.h $RPM_BUILD_ROOT%{_includedir}
-ln -s lib%{name}.so.0.%{version} $RPM_BUILD_ROOT%{_libdir}/lib%{name}.so
+ln -s libtinyxml.so.0.%{version} $RPM_BUILD_ROOT%{_libdir}/libtinyxml.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
