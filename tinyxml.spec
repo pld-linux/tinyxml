@@ -2,17 +2,16 @@
 Summary:	A simple, small, C++ XML parser
 Summary(pl.UTF-8):	Prosty, mały, napisany w C++ parser XML
 Name:		tinyxml
-Version:	2.6.1
+Version:	2.6.2
 Release:	1
 License:	zlib
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.zip
-# Source0-md5:	60f92af4f43364ab0c6d5b655e804bd3
+Source0:	http://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.tar.gz
+# Source0-md5:	c1b864c96804a10526540c664ade67f0
 Patch0:		%{name}-flags.patch
 URL:		http://www.grinninglizard.com/tinyxml/
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
-BuildRequires:	unzip
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -28,12 +27,25 @@ Summary:	Header files for tinyxml library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki tinyxml
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libstdc++-devel
 
 %description devel
 Header files for tinyxml library.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki tinyxml.
+
+%package static
+Summary:	Static tinyxml library
+Summary(pl.UTF-8):	Statyczna biblioteka tinyxml
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static tinyxml library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka tinyxml.
 
 %prep
 %setup -q -n %{name}
@@ -53,7 +65,7 @@ for i in tinyxml.cpp tinystr.cpp tinyxmlerror.cpp tinyxmlparser.cpp; do
 done
 libtool --tag=CXX --mode=link \
 	%{__cxx} %{rpmcxxflags} %{rpmldflags} \
-	-shared -rpath %{_libdir} -version-info 0:0:0 \
+	-rpath %{_libdir} -version-info 0:0:0 \
 	-o libtinyxml.la *.cpp.lo
 
 %install
@@ -79,6 +91,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/libtinyxml.so
+%attr(755,root,root) %{_libdir}/libtinyxml.so
 %{_libdir}/libtinyxml.la
-%{_includedir}/*
+%{_includedir}/tinystr.h
+%{_includedir}/tinyxml.h
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libtinyxml.a
