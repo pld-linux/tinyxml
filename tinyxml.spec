@@ -3,7 +3,7 @@ Summary:	A simple, small, C++ XML parser
 Summary(pl.UTF-8):	Prosty, mały, napisany w C++ parser XML
 Name:		tinyxml
 Version:	2.6.2
-Release:	1
+Release:	2
 License:	zlib
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.tar.gz
@@ -55,13 +55,13 @@ Statyczna biblioteka tinyxml.
 %{__make} \
 	CXX="%{__cxx}" \
 	LD="%{__cxx}" \
-	OPTFLAGS="%{rpmcppflags} %{rpmcxxflags}" \
+	OPTFLAGS="%{rpmcppflags} %{rpmcxxflags} -DTIXML_USE_STL" \
 	LDFLAGS="%{rpmldflags}"
 
 # Not really designed to be built as lib
 for i in tinyxml.cpp tinystr.cpp tinyxmlerror.cpp tinyxmlparser.cpp; do
 	libtool --tag=CXX --mode=compile \
-		%{__cxx} %{rpmcppflags} %{rpmcxxflags} -o $i.lo -c $i
+		%{__cxx} %{rpmcppflags} %{rpmcxxflags} -DTIXML_USE_STL -o $i.lo -c $i
 done
 libtool --tag=CXX --mode=link \
 	%{__cxx} %{rpmcxxflags} %{rpmldflags} \
