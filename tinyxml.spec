@@ -3,12 +3,13 @@ Summary:	A simple, small, C++ XML parser
 Summary(pl.UTF-8):	Prosty, mały, napisany w C++ parser XML
 Name:		tinyxml
 Version:	2.6.2
-Release:	2
+Release:	3
 License:	zlib
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.tar.gz
 # Source0-md5:	c1b864c96804a10526540c664ade67f0
 Patch0:		%{name}-flags.patch
+Patch1:		enforce-use-stl.patch
 URL:		http://www.grinninglizard.com/tinyxml/
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
@@ -50,6 +51,7 @@ Statyczna biblioteka tinyxml.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__make} \
