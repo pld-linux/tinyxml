@@ -3,7 +3,7 @@ Summary:	A simple, small, C++ XML parser
 Summary(pl.UTF-8):	Prosty, mały, napisany w C++ parser XML
 Name:		tinyxml
 Version:	2.6.2
-Release:	6
+Release:	7
 License:	zlib
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.tar.gz
