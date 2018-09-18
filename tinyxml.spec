@@ -3,11 +3,12 @@ Summary:	A simple, small, C++ XML parser
 Summary(pl.UTF-8):	Prosty, mały, napisany w C++ parser XML
 Name:		tinyxml
 Version:	2.6.2
-Release:	7
+Release:	8
 License:	zlib
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.tar.gz
 # Source0-md5:	c1b864c96804a10526540c664ade67f0
+Source1:	%{name}.pc.in
 Patch0:		%{name}-flags.patch
 Patch1:		enforce-use-stl.patch
 URL:		http://www.grinninglizard.com/tinyxml/
@@ -78,6 +79,14 @@ cp -a xmltest $RPM_BUILD_ROOT%{_bindir}
 cp -a tiny*.h $RPM_BUILD_ROOT%{_includedir}
 libtool --mode=install %{__install} libtinyxml.la $RPM_BUILD_ROOT%{_libdir}
 
+install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
+sed -e 's![@]prefix[@]!%{_prefix}!g' \
+ -e 's![@]exec_prefix[@]!%{_exec_prefix}!g' \
+ -e 's![@]libdir[@]!%{_libdir}!g' \
+ -e 's![@]includedir[@]!%{_includedir}!g' \
+ -e 's![@]version[@]!%{version}!g' \
+ %{SOURCE1} > $RPM_BUILD_ROOT%{_pkgconfigdir}/%{name}.pc
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -97,6 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libtinyxml.la
 %{_includedir}/tinystr.h
 %{_includedir}/tinyxml.h
+%{_pkgconfigdir}/tinyxml.pc
 
 %files static
 %defattr(644,root,root,755)
