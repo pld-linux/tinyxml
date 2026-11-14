@@ -3,8 +3,8 @@ Summary:	A simple, small, C++ XML parser
 Summary(pl.UTF-8):	Prosty, mały, napisany w C++ parser XML
 Name:		tinyxml
 Version:	2.6.2
-Release:	9
-License:	zlib
+Release:	10
+License:	Zlib
 Group:		Libraries
 Source0:	https://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.tar.gz
 # Source0-md5:	c1b864c96804a10526540c664ade67f0
@@ -30,8 +30,8 @@ TinyXML to prosty, mały, napisany w C++ parser XML, który może być w
 Summary:	Header files for tinyxml library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki tinyxml
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	libstdc++-devel
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	libstdc++-devel%{?_isa}
 
 %description devel
 Header files for tinyxml library.
@@ -43,7 +43,7 @@ Pliki nagłówkowe biblioteki tinyxml.
 Summary:	Static tinyxml library
 Summary(pl.UTF-8):	Statyczna biblioteka tinyxml
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 
 %description static
 Static tinyxml library.
@@ -83,11 +83,14 @@ libtool --mode=install %{__install} libtinyxml.la $RPM_BUILD_ROOT%{_libdir}
 
 install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
 sed -e 's![@]prefix[@]!%{_prefix}!g' \
- -e 's![@]exec_prefix[@]!%{_exec_prefix}!g' \
- -e 's![@]libdir[@]!%{_libdir}!g' \
- -e 's![@]includedir[@]!%{_includedir}!g' \
- -e 's![@]version[@]!%{version}!g' \
- %{SOURCE1} > $RPM_BUILD_ROOT%{_pkgconfigdir}/%{name}.pc
+	-e 's![@]exec_prefix[@]!%{_exec_prefix}!g' \
+	-e 's![@]libdir[@]!%{_libdir}!g' \
+	-e 's![@]includedir[@]!%{_includedir}!g' \
+	-e 's![@]version[@]!%{version}!g' \
+	%{SOURCE1} > $RPM_BUILD_ROOT%{_pkgconfigdir}/%{name}.pc
+
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libtinyxml.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -99,13 +102,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc changes.txt readme.txt
 %attr(755,root,root) %{_bindir}/xmltest
-%attr(755,root,root) %{_libdir}/libtinyxml.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libtinyxml.so.0
+%{_libdir}/libtinyxml.so.*.*.*
+%ghost %{_libdir}/libtinyxml.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libtinyxml.so
-%{_libdir}/libtinyxml.la
+%{_libdir}/libtinyxml.so
 %{_includedir}/tinystr.h
 %{_includedir}/tinyxml.h
 %{_pkgconfigdir}/tinyxml.pc
