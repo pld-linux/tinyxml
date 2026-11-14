@@ -6,12 +6,14 @@ Version:	2.6.2
 Release:	9
 License:	zlib
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.tar.gz
+Source0:	https://downloads.sourceforge.net/tinyxml/%{name}_%{file_version}.tar.gz
 # Source0-md5:	c1b864c96804a10526540c664ade67f0
 Source1:	%{name}.pc.in
 Patch0:		%{name}-flags.patch
 Patch1:		enforce-use-stl.patch
-URL:		http://www.grinninglizard.com/tinyxml/
+# dead
+#URL:		http://www.grinninglizard.com/tinyxml/
+URL:		https://sourceforge.net/projects/tinyxml/
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
